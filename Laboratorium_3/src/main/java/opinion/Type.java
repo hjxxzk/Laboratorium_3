@@ -1,5 +1,6 @@
 package opinion;
 
+
 /**
  * Positive - Positive evaluation
  * Negative - Negative evaluation
@@ -13,5 +14,6 @@ public enum Type {
     /**
      * Negative comment
      */
-    Negative;
+    Negative
+
 }
