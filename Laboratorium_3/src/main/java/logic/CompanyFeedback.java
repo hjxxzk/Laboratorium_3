@@ -22,7 +22,7 @@ public class CompanyFeedback implements LogicInterface {
                 .filter(Opinion -> Opinion.getId() == id)
                 .forEach(Opinion -> {
                     System.out.println();
-                    System.out.println("Date: " + Opinion.getDate());
+                    System.out.println("ID " + Opinion.getId() + "Date: " + Opinion.getDate());
                     System.out.println("Type: " + Opinion.getType() + "   Weight: " + Opinion.getWeight() + "   Index: " + Opinion.getNumber());
                     System.out.println(Opinion.getComment());
                 });
@@ -33,7 +33,7 @@ public class CompanyFeedback implements LogicInterface {
         opinions
                 .forEach(Opinion -> {
                     System.out.println();
-                    System.out.println("Date: " + Opinion.getDate());
+                    System.out.println("ID " + Opinion.getId() + "  Date: " + Opinion.getDate());
                     System.out.println("Type: " + Opinion.getType() + "   Weight: " + Opinion.getWeight() + "   Index: " + Opinion.getNumber());
                     System.out.println(Opinion.getComment());
                 });
@@ -45,7 +45,7 @@ public class CompanyFeedback implements LogicInterface {
         Opinion opinion = new Opinion(id, date, setOrder(id), type, weight, comment);
         opinions.add(opinion);
     }
-
+    @Override
     public int setOrder(int id) {
         return (int) opinions.stream()
                     .filter(Opinion -> Opinion.getId() == id)

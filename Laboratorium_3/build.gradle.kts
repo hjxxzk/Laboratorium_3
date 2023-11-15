@@ -1,3 +1,5 @@
+import groovy.xml.dom.DOMCategory.attributes
+
 plugins {
     id("java")
 }
@@ -15,7 +17,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     implementation ("org.xerial:sqlite-jdbc:3.44.0.0")
-    implementation ("org.slf4j:slf4j-simple:1.7.32")
+    implementation ("org.slf4j:slf4j-api:1.7.36")
+    implementation("ch.qos.logback:logback-classic:1.2.9")
 }
 
 tasks.test {

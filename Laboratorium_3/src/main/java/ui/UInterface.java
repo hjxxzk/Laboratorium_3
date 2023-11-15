@@ -11,14 +11,5 @@ public interface UInterface {
     void stopSystem();
     void getUserInput() throws IOException, InterruptedException;
     void getOpinion();
-    int getIntData();
-    String getStringData();
-    int setInt(String data);
-    LocalDate setDate();
-
-    Type setType();
-    int setWeight();
-    String setComment();
-    boolean isAlright(String data);
     void getTrend();
 }

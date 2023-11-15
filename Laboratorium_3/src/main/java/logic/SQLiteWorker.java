@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 public class SQLiteWorker {
 
-    private static Connection connect(String dbPath) throws SQLException {
+    private static Connection connect(String dbPath) throws SQLException, ClassNotFoundException {
+        Class.forName("org.sqlite.JDBC");
         return DriverManager.getConnection("jdbc:sqlite:" + dbPath);
     }
 
@@ -31,7 +32,7 @@ public class SQLiteWorker {
                                         resultSet.getString("comment")));
             }
 
-        }   catch (SQLException e)  {
+        }   catch (SQLException | ClassNotFoundException e)  {
             e.printStackTrace();
         }
 
