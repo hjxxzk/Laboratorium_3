@@ -10,9 +10,12 @@ repositories {
 }
 
 dependencies {
+    implementation("junit:junit:4.13.1")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    implementation ("org.xerial:sqlite-jdbc:3.44.0.0")
+    implementation ("org.slf4j:slf4j-simple:1.7.32")
 }
 
 tasks.test {

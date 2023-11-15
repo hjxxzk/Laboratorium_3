@@ -1,25 +1,25 @@
 package opinion;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Opinion {
 
     private final int id;
 
     private final int number;
-    private final Date date;
+    private final LocalDate date;
     private final int weight;
     private final String comment;
     Type type;
 
-    public Opinion(int id, Date date, Type type, int weight, String comment, int number) {
+    public Opinion(int id, LocalDate date, int number, Type type, int weight, String comment) {
 
         this.id = id;
         this.date = date;
+        this.number = number;
         this.type = type;
         this.weight = weight;
         this.comment = comment;
-        this.number = number;
 
     }
 

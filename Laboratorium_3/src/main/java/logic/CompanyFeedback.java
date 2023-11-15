@@ -3,33 +3,46 @@ package logic;
 import opinion.Opinion;
 import opinion.Type;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+
+import static logic.SQLiteWorker.readDatabase;
 
 public class CompanyFeedback implements LogicInterface {
 
     private final ArrayList<Opinion> opinions;
 
-    public CompanyFeedback()    {
-        this.opinions = new ArrayList<>();
+    public CompanyFeedback(String dbPath, String dbName)    {
+        this.opinions = readDatabase(dbPath, dbName);
     }
 
     @Override
     public void displayOpinion(int id) {
         opinions.stream()
                 .filter(Opinion -> Opinion.getId() == id)
-                .forEach(Opinion -> {   //metoda dla display
+                .forEach(Opinion -> {
+                    System.out.println();
                     System.out.println("Date: " + Opinion.getDate());
                     System.out.println("Type: " + Opinion.getType() + "   Weight: " + Opinion.getWeight() + "   Index: " + Opinion.getNumber());
                     System.out.println(Opinion.getComment());
-                    System.out.println();
                 });
     }
 
     @Override
-    public void addOpinion(int id, Date date, Type type, int weight, String comment) {
+    public void displayAll() {
+        opinions
+                .forEach(Opinion -> {
+                    System.out.println();
+                    System.out.println("Date: " + Opinion.getDate());
+                    System.out.println("Type: " + Opinion.getType() + "   Weight: " + Opinion.getWeight() + "   Index: " + Opinion.getNumber());
+                    System.out.println(Opinion.getComment());
+                });
+    }
 
-        Opinion opinion = new Opinion(id, date, type, weight, comment, setOrder(id));
+    @Override
+    public void addOpinion(int id, LocalDate date, Type type, int weight, String comment) {
+
+        Opinion opinion = new Opinion(id, date, setOrder(id), type, weight, comment);
         opinions.add(opinion);
     }
 

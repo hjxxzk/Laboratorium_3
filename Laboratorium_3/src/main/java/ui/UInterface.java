@@ -2,18 +2,19 @@ package ui;
 
 import opinion.Type;
 
-import java.util.Date;
+import java.io.IOException;
+import java.time.LocalDate;
 
 public interface UInterface {
-    void displayMenu();
+    void displayMenu() throws IOException, InterruptedException;
     void startSystem();
     void stopSystem();
-    void getUserInput();
+    void getUserInput() throws IOException, InterruptedException;
     void getOpinion();
     int getIntData();
     String getStringData();
     int setInt(String data);
-    Date setDate();
+    LocalDate setDate();
 
     Type setType();
     int setWeight();

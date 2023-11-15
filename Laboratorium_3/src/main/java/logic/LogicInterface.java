@@ -2,11 +2,12 @@ package logic;
 
 import opinion.Type;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public interface LogicInterface {
     void displayOpinion(int id);
-    void addOpinion(int id, Date date, Type type, int weight, String comment);
+    void displayAll();
+    void addOpinion(int id, LocalDate date, Type type, int weight, String comment);
     int setOrder(int id);
     void cancelOpinion(int id, int number);
     void analyzeTrend(String period);

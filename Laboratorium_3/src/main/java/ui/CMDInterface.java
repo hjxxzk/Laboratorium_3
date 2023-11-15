@@ -3,9 +3,10 @@ package ui;
 import logic.CompanyFeedback;
 import opinion.Type;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -19,13 +20,15 @@ public class CMDInterface implements UInterface {
 
 
     @Override
-    public void displayMenu() {
+    public void displayMenu() throws IOException, InterruptedException {
+      //  cls();
         System.out.println("How can I be of service?");
         System.out.println("1. Add opinion");
         System.out.println("2. Find opinion");
         System.out.println("3. Remove opinion");
         System.out.println("4. Analyze trend");
-        System.out.println("5. End for today");
+        System.out.println("5. Display all");
+        System.out.println("6. End for today");
         getUserInput();
     }
 
@@ -40,23 +43,24 @@ public class CMDInterface implements UInterface {
     }
 
     @Override
-    public void getUserInput() {
+    public void getUserInput() throws IOException, InterruptedException {
 
         System.out.println("Enter number of action: ");
         int input = getIntData();
         if(isAlright(String.valueOf(input))) {
 
             switch (input) {
-                case 1 -> { getOpinion(); displayMenu(); }
+                case 1 -> { getOpinion(); scanner.nextLine(); displayMenu(); }
                 case 2 -> { feedback.displayOpinion(setInt("ID")); displayMenu(); }
                 case 3 -> { feedback.cancelOpinion(setInt("ID"), setInt("index of a comment")); displayMenu(); }
                 case 4 -> System.out.println("4");
-                case 5 -> { stopSystem(); scanner.close(); }
+                case 5 -> { feedback.displayAll(); scanner.nextLine(); displayMenu(); }
+                case 6 -> { stopSystem(); scanner.close(); }
                 default -> { System.out.print("Incorrect number. "); getUserInput(); }
             }
 
         } else {
-            getUserInput();
+            getIntData();
         }
     }
 
@@ -96,15 +100,17 @@ public class CMDInterface implements UInterface {
     }
 
 
-    public Date setDate() {
+    public LocalDate setDate() {
 
         System.out.println("Enter date (yyyy-mm-dd format): ");
         String input = getStringData();
-        Date date = null;
+
+        LocalDate date = null;
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            date = simpleDateFormat.parse(input);
-        } catch (ParseException e) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            date = LocalDate.parse(input, formatter);
+
+        } catch (DateTimeParseException e) {
             System.out.print("Incorrect input. Try again. ");
             setDate();
         }
@@ -175,6 +181,10 @@ public class CMDInterface implements UInterface {
             isAlright(data);
         }
         return true;
+    }
+
+    public void cls() throws IOException, InterruptedException   {
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
     }
 
     @Override
