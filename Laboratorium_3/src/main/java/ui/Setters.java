@@ -102,7 +102,9 @@ public class Setters {
             scanner.nextLine();
 
         } catch (InputMismatchException exception)  {
-            System.out.print("Incorrect input. Try again. ");
+            System.out.println("Incorrect input. ");
+            System.out.print("Try again: ");
+            scanner.nextLine();
             getIntData();
         }
         return input;

@@ -4,13 +4,14 @@ import logic.CompanyFeedback;
 import ui.CMDInterface;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        String dbPath = "--tu wstaw ścieżkę do bazy danych ---";
+    public static void main(String[] args) throws IOException, InterruptedException, SQLException, ClassNotFoundException {
+        String dbPath = "C:/Users/agnie/IdeaProjects/Laboratorium_3/Laboratorium_3/src/main/resources/Lab3.db";
         String dbName = "lab3";
         CompanyFeedback feedback = new CompanyFeedback(dbPath, dbName);
-        CMDInterface CMDin = new CMDInterface(feedback);
+        CMDInterface CMDin = new CMDInterface(feedback, dbPath);
 
         CMDin.startSystem();
         CMDin.displayMenu();

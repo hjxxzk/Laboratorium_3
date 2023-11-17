@@ -3,17 +3,24 @@ package logic;
 import opinion.Opinion;
 import opinion.Type;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static logic.SQLiteWorker.readDatabase;
+import static logic.SQLiteWorker.*;
 
 public class CompanyFeedback implements LogicInterface {
 
     private final ArrayList<Opinion> opinions;
+    private final String dbPath;
+    private final String dbName;
+
 
     public CompanyFeedback(String dbPath, String dbName)    {
+        this.dbPath = dbPath;
         this.opinions = readDatabase(dbPath, dbName);
+        this.dbName = dbName.toLowerCase();
     }
 
     @Override
@@ -40,10 +47,11 @@ public class CompanyFeedback implements LogicInterface {
     }
 
     @Override
-    public void addOpinion(int id, LocalDate date, Type type, int weight, String comment) {
+    public void addOpinion(int id, LocalDate date, Type type, int weight, String comment) throws SQLException, ClassNotFoundException {
 
         Opinion opinion = new Opinion(id, date, setOrder(id), type, weight, comment);
         opinions.add(opinion);
+        newOpinion(opinion, dbPath, dbName);
     }
     @Override
     public int setOrder(int id) {
@@ -53,12 +61,24 @@ public class CompanyFeedback implements LogicInterface {
     }
 
     @Override
-    public void cancelOpinion(int id, int number) {
+    public void cancelOpinion(int id, int number) throws SQLException, ClassNotFoundException {
         opinions.removeIf(Opinion -> Opinion.getId() == id && Opinion.getNumber() == number);
+        cutOpinion(id, number, dbPath, dbName);
+
     }
 
     @Override
-    public void analyzeTrend(String period) {
+    public void analyzeTrend(String start, String end, String dbPath) {
+
+        try {
+            String[] command = {"python", "TrendLineMaker.py", start, end, dbPath};
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+
+        } catch (IOException | InterruptedException e)  {
+            e.printStackTrace();
+        }
+
 
     }
 }

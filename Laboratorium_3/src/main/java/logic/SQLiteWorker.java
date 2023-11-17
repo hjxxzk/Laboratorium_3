@@ -51,4 +51,24 @@ public class SQLiteWorker {
         return output;
     }
 
+    static void cutOpinion(int id, int index, String dbPath, String dbName) throws SQLException, ClassNotFoundException {
+        Connection connection = connect(dbPath);
+        PreparedStatement deleteStatement = connection.prepareStatement("DELETE FROM " + dbName + " WHERE id = " + id + " AND number = " + index);
+        deleteStatement.executeUpdate();
+    }
+    static void newOpinion(Opinion opinion, String dbPath, String dbName) throws SQLException, ClassNotFoundException {
+        Connection connection = connect(dbPath);
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO " + dbName + " (id, date, number, type, weight, comment) VALUES (?, ?, ?, ?, ?, ?)");
+
+        statement.setInt(1, opinion.getId());
+        statement.setString(2, opinion.getDate());
+        statement.setInt(3, opinion.getNumber());
+        statement.setString(4, String.valueOf(opinion.getType()));
+        statement.setInt(5, opinion.getWeight());
+        statement.setString(6, opinion.getComment());
+
+        statement.executeUpdate();
+
+    }
+
 }

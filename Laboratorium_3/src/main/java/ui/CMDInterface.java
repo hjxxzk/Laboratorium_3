@@ -3,6 +3,8 @@ package ui;
 import logic.CompanyFeedback;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import static ui.Setters.*;
@@ -10,14 +12,16 @@ import static ui.Setters.*;
 public class CMDInterface implements UInterface {
 
     private final CompanyFeedback feedback;
+    private final String dbPath;
     Scanner scanner = new Scanner(System.in);
-    public CMDInterface(CompanyFeedback feedback)   {
+    public CMDInterface(CompanyFeedback feedback, String dbPath)   {
         this.feedback = feedback;
+        this.dbPath = dbPath;
     }
 
 
     @Override
-    public void displayMenu() throws IOException, InterruptedException {
+    public void displayMenu() throws IOException, InterruptedException, SQLException, ClassNotFoundException {
       //  cls();
         System.out.println("How can I be of service?");
         System.out.println("1. Add opinion");
@@ -40,7 +44,7 @@ public class CMDInterface implements UInterface {
     }
 
     @Override
-    public void getUserInput() throws IOException, InterruptedException {
+    public void getUserInput() throws IOException, InterruptedException, SQLException, ClassNotFoundException {
 
         System.out.println("Enter number of action: ");
         int input = getIntData();
@@ -50,7 +54,7 @@ public class CMDInterface implements UInterface {
                 case 1 -> { getOpinion(); scanner.nextLine(); displayMenu(); }
                 case 2 -> { feedback.displayOpinion(setInt("ID")); displayMenu(); }
                 case 3 -> { feedback.cancelOpinion(setInt("ID"), setInt("index of a comment")); displayMenu(); }
-                case 4 -> System.out.println("4");
+                case 4 -> { getTrend(); displayMenu(); }
                 case 5 -> { feedback.displayAll(); scanner.nextLine(); displayMenu(); }
                 case 6 -> { stopSystem(); scanner.close(); }
                 default -> { System.out.print("Incorrect number. "); getUserInput(); }
@@ -62,7 +66,7 @@ public class CMDInterface implements UInterface {
     }
 
     @Override
-    public void getOpinion() {
+    public void getOpinion() throws SQLException, ClassNotFoundException {
         feedback.addOpinion(setInt("ID"),setDate(),setType(),setWeight(),setComment());
     }
 
@@ -74,6 +78,14 @@ public class CMDInterface implements UInterface {
 
     @Override
     public void getTrend() {
+
+        System.out.println("Set start of the period to crate trend line for.");
+        LocalDate start = setDate();
+
+        System.out.println("Set end of the period to crate trend line for.");
+        LocalDate end = setDate();
+
+        feedback.analyzeTrend(String.valueOf(start), String.valueOf(end), dbPath);
 
     }
 }
