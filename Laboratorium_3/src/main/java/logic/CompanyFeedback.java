@@ -15,12 +15,14 @@ public class CompanyFeedback implements LogicInterface {
     private final ArrayList<Opinion> opinions;
     private final String dbPath;
     private final String dbName;
+    private final String pyPath;
 
 
-    public CompanyFeedback(String dbPath, String dbName)    {
+    public CompanyFeedback(String dbPath, String dbName, String pyPath)    {
         this.dbPath = dbPath;
         this.opinions = readDatabase(dbPath, dbName);
         this.dbName = dbName.toLowerCase();
+        this.pyPath = pyPath;
     }
 
     @Override
@@ -68,10 +70,10 @@ public class CompanyFeedback implements LogicInterface {
     }
 
     @Override
-    public void analyzeTrend(String start, String end, String dbPath) {
+    public void analyzeTrend(String id, String start, String end, String dbPath) {
 
         try {
-            String[] command = {"python", "TrendLineMaker.py", start, end, dbPath};
+            String[] command = {"python", pyPath, id, start, end, dbPath};
             Process process = Runtime.getRuntime().exec(command);
             process.waitFor();
 

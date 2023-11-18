@@ -11,5 +11,5 @@ public interface LogicInterface {
     void addOpinion(int id, LocalDate date, Type type, int weight, String comment) throws SQLException, ClassNotFoundException;
     int setOrder(int id);
     void cancelOpinion(int id, int number) throws SQLException, ClassNotFoundException;
-    void analyzeTrend(String start, String end, String dbPath);
+    void analyzeTrend(String id, String start, String end, String dbPath);
 }

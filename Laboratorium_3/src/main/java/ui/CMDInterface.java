@@ -79,13 +79,15 @@ public class CMDInterface implements UInterface {
     @Override
     public void getTrend() {
 
+        String id = getStringData();
+
         System.out.println("Set start of the period to crate trend line for.");
         LocalDate start = setDate();
 
         System.out.println("Set end of the period to crate trend line for.");
         LocalDate end = setDate();
 
-        feedback.analyzeTrend(String.valueOf(start), String.valueOf(end), dbPath);
+        feedback.analyzeTrend(id, String.valueOf(start), String.valueOf(end), dbPath);
 
     }
 }
