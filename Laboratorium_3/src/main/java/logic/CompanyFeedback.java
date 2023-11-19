@@ -10,15 +10,31 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import static logic.SQLiteWorker.*;
+/**
+ * The `CompanyFeedback` class implements the `LogicInterface` and represents the logic layer of the company feedback system.
+ */
 
 public class CompanyFeedback implements LogicInterface {
-
+    /**
+     * Collection to store opinions
+     */
     private final ArrayList<Opinion> opinions;
+    /**
+     * Database path
+     */
     private final String dbPath;
+    /**
+     * Database name
+     */
     private final String dbName;
+    /**
+     * Path to the Python script for trend analysis
+     */
     private final String pyPath;
 
-
+    /**
+     * Constructor to initialize a CompanyFeedback object with the specified database path, database name, and Python script path.
+     */
     public CompanyFeedback(String dbPath, String dbName, String pyPath)    {
         this.dbPath = dbPath;
         this.opinions = readDatabase(dbPath, dbName);
@@ -26,6 +42,9 @@ public class CompanyFeedback implements LogicInterface {
         this.pyPath = pyPath;
     }
 
+    /**
+     * Displays a specific opinion based on its unique identifier.
+     */
     @Override
     public void displayOpinion(int id) {
         opinions.stream()
@@ -39,6 +58,9 @@ public class CompanyFeedback implements LogicInterface {
                 });
     }
 
+    /**
+     * Displays all opinions, sorted by ID and then by opinion number.
+     */
     @Override
     public void displayAll() {
         opinions.stream()
@@ -52,6 +74,9 @@ public class CompanyFeedback implements LogicInterface {
                 });
     }
 
+    /**
+     * Adds a new opinion to the system and updates the database.
+     */
     @Override
     public void addOpinion(int id, LocalDate date, Type type, int weight, String comment) throws SQLException, ClassNotFoundException {
 
@@ -59,6 +84,10 @@ public class CompanyFeedback implements LogicInterface {
         opinions.add(opinion);
         newOpinion(opinion, dbPath, dbName);
     }
+
+    /**
+     * Sets the order/index for a new opinion based on the existing opinions with the same ID.
+     */
     @Override
     public int setOrder(int id) {
         return (int) opinions.stream()
@@ -66,6 +95,9 @@ public class CompanyFeedback implements LogicInterface {
                     .count() + 1;
     }
 
+    /**
+     * Cancels a specific opinion based on its unique identifier and order/index.
+     */
     @Override
     public void cancelOpinion(int id, int number) throws SQLException, ClassNotFoundException {
         opinions.removeIf(Opinion -> Opinion.getId() == id && Opinion.getNumber() == number);
@@ -73,6 +105,9 @@ public class CompanyFeedback implements LogicInterface {
 
     }
 
+    /**
+     * Analyzes the trend using a Python script based on the provided parameters.
+     */
     @Override
     public void analyzeTrend(String id, String start, String end, String dbPath) {
 

@@ -8,11 +8,23 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+/**
+ * The `Setters` class provides static methods for setting various data types and handling user input in the user interface.
+ */
 public class Setters {
-
+    /**
+     * Scanner for user input
+     */
     static Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Sets an integer value based on user input.
+     *
+     * @param data The description of the data to be entered.
+     * @return The entered integer value.
+     * @throws IOException            If an I/O exception occurs.
+     * @throws InterruptedException   If the execution is interrupted.
+     */
     public static int setInt(String data) throws IOException, InterruptedException {
 
         System.out.println("Enter " + data + ": ");
@@ -25,7 +37,13 @@ public class Setters {
         return input;
     }
 
-
+    /**
+     * Sets a LocalDate object based on user input for date.
+     *
+     * @return The entered LocalDate object.
+     * @throws IOException            If an I/O exception occurs.
+     * @throws InterruptedException   If the execution is interrupted.
+     */
     public static LocalDate setDate() throws IOException, InterruptedException {
 
         System.out.println("Enter date (yyyy-mm-dd format): ");
@@ -49,6 +67,11 @@ public class Setters {
         return date;
     }
 
+    /**
+     * Sets the Type (Positive/Negative) based on user input.
+     *
+     * @return The entered Type.
+     */
     public static Type setType() {
 
         System.out.println("Negative or positive comment? Type p or n: ");
@@ -62,6 +85,13 @@ public class Setters {
         return setType();
     }
 
+    /**
+     * Sets the weight (1/2/3) based on user input.
+     *
+     * @return The entered weight.
+     * @throws IOException          If an I/O exception occurs.
+     * @throws InterruptedException If the execution is interrupted.
+     */
     public static int setWeight() throws IOException, InterruptedException {
 
         System.out.println("Set weight (1 / 2 / 3). Enter number: ");
@@ -77,6 +107,13 @@ public class Setters {
         return setWeight();
     }
 
+    /**
+     * Sets a comment based on user input.
+     *
+     * @return The entered comment.
+     * @throws IOException          If an I/O exception occurs.
+     * @throws InterruptedException If the execution is interrupted.
+     */
     public static String setComment() throws IOException, InterruptedException {
 
         System.out.println("Enter a comment (max. 350 characters)");
@@ -95,7 +132,11 @@ public class Setters {
         return comment;
     }
 
-
+    /**
+     * Gets an integer value from user input.
+     *
+     * @return The entered integer value.
+     */
     public static int getIntData() {
         int input = 0;
         try {
@@ -111,10 +152,22 @@ public class Setters {
         return input;
     }
 
+    /**
+     * Gets a string value from user input.
+     *
+     * @return The entered string value.
+     */
     public static String getStringData() {
         return scanner.nextLine();
     }
 
+    /**
+     * Checks if the entered data is correct based on user input.
+     *
+     * @return True if the data is correct, false otherwise.
+     * @throws IOException        If an I/O exception occurs.
+     * @throws InterruptedException If the execution is interrupted.
+     */
     public static boolean isAlright() throws IOException, InterruptedException {
         System.out.println("Is the input correct? Type y or n: ");
         String answer = getStringData();
@@ -130,12 +183,21 @@ public class Setters {
         return true;
     }
 
+    /**
+     * Waits for user input to continue the program.
+     */
     public static void waitForInput()  {
         System.out.println();
         System.out.println("Press Enter to continue...");
         scanner.nextLine();
     }
 
+    /**
+     * Clears the console screen.
+     *
+     * @throws IOException        If an I/O exception occurs.
+     * @throws InterruptedException If the execution is interrupted.
+     */
     public static void cls() throws IOException, InterruptedException   {
         ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "cls");
         Process process = processBuilder.inheritIO().start();

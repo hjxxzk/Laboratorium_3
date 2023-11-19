@@ -8,18 +8,42 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 import static ui.Setters.*;
-
+/**
+ * The `CMDInterface` class implements the `UInterface` and provides a command-line interface for interacting with the company feedback system.
+ */
 public class CMDInterface implements UInterface {
-
+    /**
+     * Instance of the CompanyFeedback class to handle the program logic
+     */
     private final CompanyFeedback feedback;
+    /**
+     * ath to the SQLite database
+     */
     private final String dbPath;
+    /**
+     * Scanner for user input
+     */
     Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Constructor to initialize a CMDInterface object with the specified CompanyFeedback instance and database path.
+     *
+     * @param feedback The CompanyFeedback instance to handle the business logic.
+     * @param dbPath   The path to the SQLite database.
+     */
     public CMDInterface(CompanyFeedback feedback, String dbPath)   {
         this.feedback = feedback;
         this.dbPath = dbPath;
     }
 
-
+    /**
+     * Displays the main menu of the command-line interface.
+     *
+     * @throws IOException            If an I/O exception occurs.
+     * @throws InterruptedException   If the execution is interrupted.
+     * @throws SQLException           If a SQL exception occurs.
+     * @throws ClassNotFoundException If the specified class cannot be found.
+     */
     @Override
     public void displayMenu() throws IOException, InterruptedException, SQLException, ClassNotFoundException {
         cls();
@@ -33,16 +57,28 @@ public class CMDInterface implements UInterface {
         getUserInput();
     }
 
+
+    /**
+     * Displays a welcome message to start the system.
+     */
     @Override
     public void startSystem() {
         System.out.println("Welcome! Let's get to work, boss!");
     }
 
+
+    /**
+     * Displays a closing message to end the system.
+     */
     @Override
     public void stopSystem() {
         System.out.println("Thanks for the hard work. Bye!");
     }
 
+
+    /**
+     * Gets user input based on the selected action and performs the corresponding operation.
+     */
     @Override
     public void getUserInput() throws IOException, InterruptedException, SQLException, ClassNotFoundException {
 
@@ -65,11 +101,17 @@ public class CMDInterface implements UInterface {
         }
     }
 
+    /**
+     * Prompts the user for input and adds a new opinion based on the provided data.
+     */
     @Override
     public void getOpinion() throws SQLException, ClassNotFoundException, IOException, InterruptedException {
         feedback.addOpinion(setInt("ID"),setDate(),setType(),setWeight(),setComment());
     }
 
+    /**
+     * Prompts the user for input and analyzes the trend based on the provided parameters.
+     */
     @Override
     public void getTrend() throws IOException, InterruptedException {
 

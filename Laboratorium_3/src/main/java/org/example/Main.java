@@ -5,8 +5,19 @@ import ui.CMDInterface;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
+/**
+ * Main class
+ */
 public class Main {
+    /**
+     * The main method that initializes and starts the company feedback system.
+     *
+     * @param args Command-line arguments containing the database path, database name, and Python script path.
+     * @throws IOException            If an I/O exception occurs.
+     * @throws InterruptedException   If the execution is interrupted.
+     * @throws SQLException           If a SQL exception occurs.
+     * @throws ClassNotFoundException If the specified class cannot be found.
+     */
     public static void main(String[] args) throws IOException, InterruptedException, SQLException, ClassNotFoundException {
 
         String dbPath = args[0];
