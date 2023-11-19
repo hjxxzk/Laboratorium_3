@@ -30,7 +30,6 @@ for op_type in df_aggregated['type'].unique():
     data_by_type = df_aggregated[df_aggregated['type'] == op_type]
     plt.plot(data_by_type['data'], data_by_type['weight'], label=op_type)
 
-plt.legend()
 plt.xlabel('Date')
 plt.ylabel('Weight sum')
 plt.title('Trend line by opinion type')

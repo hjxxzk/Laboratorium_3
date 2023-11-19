@@ -22,10 +22,10 @@ public class CMDInterface implements UInterface {
 
     @Override
     public void displayMenu() throws IOException, InterruptedException, SQLException, ClassNotFoundException {
-      //  cls();
+        cls();
         System.out.println("How can I be of service?");
         System.out.println("1. Add opinion");
-        System.out.println("2. Find opinion");
+        System.out.println("2. Find employee");
         System.out.println("3. Remove opinion");
         System.out.println("4. Analyze trend");
         System.out.println("5. Display all");
@@ -51,11 +51,11 @@ public class CMDInterface implements UInterface {
         if(isAlright()) {
 
             switch (input) {
-                case 1 -> { getOpinion(); scanner.nextLine(); displayMenu(); }
-                case 2 -> { feedback.displayOpinion(setInt("ID")); displayMenu(); }
-                case 3 -> { feedback.cancelOpinion(setInt("ID"), setInt("index of a comment")); displayMenu(); }
-                case 4 -> { getTrend(); displayMenu(); }
-                case 5 -> { feedback.displayAll(); scanner.nextLine(); displayMenu(); }
+                case 1 -> { getOpinion(); waitForInput(); displayMenu(); }
+                case 2 -> { feedback.displayOpinion(setInt("ID")); waitForInput(); displayMenu(); }
+                case 3 -> { feedback.cancelOpinion(setInt("ID"), setInt("index of a comment")); waitForInput(); displayMenu(); }
+                case 4 -> { getTrend(); waitForInput(); displayMenu(); }
+                case 5 -> { feedback.displayAll(); waitForInput(); displayMenu(); }
                 case 6 -> { stopSystem(); scanner.close(); }
                 default -> { System.out.print("Incorrect number. "); getUserInput(); }
             }
@@ -66,28 +66,23 @@ public class CMDInterface implements UInterface {
     }
 
     @Override
-    public void getOpinion() throws SQLException, ClassNotFoundException {
+    public void getOpinion() throws SQLException, ClassNotFoundException, IOException, InterruptedException {
         feedback.addOpinion(setInt("ID"),setDate(),setType(),setWeight(),setComment());
     }
 
-
-
-    public void cls() throws IOException, InterruptedException   {
-        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-    }
-
     @Override
-    public void getTrend() {
+    public void getTrend() throws IOException, InterruptedException {
 
-        String id = getStringData();
+        String id = String.valueOf(setInt("ID"));
 
-        System.out.println("Set start of the period to crate trend line for.");
+        System.out.println("Set start of the period to create trend line for.");
         LocalDate start = setDate();
 
-        System.out.println("Set end of the period to crate trend line for.");
+        System.out.println("Set end of the period to create trend line for.");
         LocalDate end = setDate();
 
         feedback.analyzeTrend(id, String.valueOf(start), String.valueOf(end), dbPath);
 
     }
+
 }

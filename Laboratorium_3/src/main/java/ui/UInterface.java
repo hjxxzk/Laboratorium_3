@@ -9,6 +9,7 @@ public interface UInterface {
     void startSystem();
     void stopSystem();
     void getUserInput() throws IOException, InterruptedException, SQLException, ClassNotFoundException;
-    void getOpinion() throws SQLException, ClassNotFoundException;
-    void getTrend();
+    void getOpinion() throws SQLException, ClassNotFoundException, IOException, InterruptedException;
+    void getTrend() throws IOException, InterruptedException;
+
 }

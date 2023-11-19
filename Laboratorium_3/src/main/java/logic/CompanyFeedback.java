@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import static logic.SQLiteWorker.*;
 
@@ -29,9 +30,10 @@ public class CompanyFeedback implements LogicInterface {
     public void displayOpinion(int id) {
         opinions.stream()
                 .filter(Opinion -> Opinion.getId() == id)
+                .sorted(Comparator.comparingInt(Opinion::getNumber))
                 .forEach(Opinion -> {
                     System.out.println();
-                    System.out.println("ID " + Opinion.getId() + "Date: " + Opinion.getDate());
+                    System.out.println("ID " + Opinion.getId() + "   Date: " + Opinion.getDate());
                     System.out.println("Type: " + Opinion.getType() + "   Weight: " + Opinion.getWeight() + "   Index: " + Opinion.getNumber());
                     System.out.println(Opinion.getComment());
                 });
@@ -39,7 +41,9 @@ public class CompanyFeedback implements LogicInterface {
 
     @Override
     public void displayAll() {
-        opinions
+        opinions.stream()
+                .sorted(Comparator.comparingInt(Opinion::getId)
+                        .thenComparingInt(Opinion::getNumber))
                 .forEach(Opinion -> {
                     System.out.println();
                     System.out.println("ID " + Opinion.getId() + "  Date: " + Opinion.getDate());
