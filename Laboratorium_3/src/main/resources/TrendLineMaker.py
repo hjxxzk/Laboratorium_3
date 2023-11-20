@@ -23,14 +23,22 @@ db_path = sys.argv[4]
 data = read_from_database(employee_id, start_date, ending_date, db_path)
 df = pd.DataFrame(data, columns=['date', 'type', 'weight'])
 
-df['data'] = pd.to_datetime(df['date'])
-df_aggregated = df.groupby(['data', 'type'])['weight'].sum().reset_index()
+df['date'] = pd.to_datetime(df['date'])
 
-for op_type in df_aggregated['type'].unique():
-    data_by_type = df_aggregated[df_aggregated['type'] == op_type]
-    plt.plot(data_by_type['data'], data_by_type['weight'], label=op_type)
+positive_comments = df[df['type'] == 'Positive']
+negative_comments = df[df['type'] == 'Negative']
 
+positive_trend = positive_comments.groupby('date')['weight'].mean().reset_index()
+negative_trend = negative_comments.groupby('date')['weight'].mean().reset_index()
+
+plt.figure(figsize=(10, 6))
+
+plt.plot(positive_trend['date'], positive_trend['weight'], label='Positive Trend', marker='o')
+plt.plot(negative_trend['date'], negative_trend['weight'], label='Negative Trend', marker='o')
+
+plt.title('Analysis of Trend Lines for Positive and Negative Comments')
 plt.xlabel('Date')
-plt.ylabel('Weight sum')
-plt.title('Trend line by opinion type')
+plt.ylabel('Average Weight')
+plt.legend()
+plt.grid(True)
 plt.show()
