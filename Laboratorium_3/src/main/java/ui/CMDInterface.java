@@ -1,6 +1,5 @@
 package ui;
 
-import logic.CompanyFeedback;
 import logic.LogicInterface;
 
 import java.io.IOException;
