@@ -20,7 +20,6 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.2.9")
     runtimeOnly("org.slf4j:slf4j-nop:2.0.9")
 }
-
 tasks.test {
     useJUnitPlatform()
 }

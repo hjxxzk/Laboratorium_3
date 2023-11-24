@@ -46,19 +46,22 @@ public class Setters {
      */
     public static LocalDate setDate() throws IOException, InterruptedException {
 
-        System.out.println("Enter date (yyyy-mm-dd format): ");
-        String input = getStringData();
-
+        String input;
         LocalDate date = null;
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            date = LocalDate.parse(input, formatter);
+        boolean test = false;
 
-        } catch (DateTimeParseException e) {
-            System.out.print("Incorrect input. Try again. ");
-            setDate();
+        while(!test) {
+            try {
+                System.out.println("Enter date (yyyy-mm-dd format): ");
+                input = getStringData();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                date = LocalDate.parse(input, formatter);
+                test = true;
+
+            } catch (DateTimeParseException e) {
+                System.out.print("Incorrect input. Try again. ");
+            }
         }
-
         if (isAlright())
             return date;
         else
@@ -82,6 +85,8 @@ public class Setters {
         }   else if (input.equalsIgnoreCase("n")) {
             return Type.Negative;
         }
+
+        System.out.println("Incorrect value. ");
         return setType();
     }
 
@@ -139,15 +144,19 @@ public class Setters {
      */
     public static int getIntData() {
         int input = 0;
-        try {
-            input = scanner.nextInt();
-            scanner.nextLine();
+        boolean test = false;
+        
+        while (!test) {
+            try {
+                input = scanner.nextInt();
+                scanner.nextLine();
+                test = true;
 
-        } catch (InputMismatchException exception)  {
-            System.out.println("Incorrect input. ");
-            System.out.print("Try again: ");
-            scanner.nextLine();
-            getIntData();
+            } catch (InputMismatchException exception) {
+                System.out.println("Incorrect input. ");
+                System.out.print("Try again: ");
+                scanner.nextLine();
+            }
         }
         return input;
     }
@@ -169,20 +178,19 @@ public class Setters {
      * @throws InterruptedException If the execution is interrupted.
      */
     public static boolean isAlright() throws IOException, InterruptedException {
-        System.out.println("Is the input correct? Type y or n: ");
-        String answer = getStringData();
-
-        if (answer.equalsIgnoreCase("y")) {
-            cls();
-            return true;
-        }   else if (answer.equalsIgnoreCase("n")) {
-            return false;
-        } else {
-            isAlright();
+        while (true) {
+            System.out.println("Is the input correct? Type y or n: ");
+            String answer = getStringData();
+            if (answer.equalsIgnoreCase("y")) {
+                cls();
+                return true;
+            } else if (answer.equalsIgnoreCase("n")) {
+                return false;
+            } else {
+                System.out.println("Invalid input. Please type y or n.");
+            }
         }
-        return true;
     }
-
     /**
      * Waits for user input to continue the program.
      */

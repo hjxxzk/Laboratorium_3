@@ -1,6 +1,7 @@
 package ui;
 
 import logic.CompanyFeedback;
+import logic.LogicInterface;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ public class CMDInterface implements UInterface {
     /**
      * Instance of the CompanyFeedback class to handle the program logic
      */
-    private final CompanyFeedback feedback;
+    private final LogicInterface feedback;
     /**
      * ath to the SQLite database
      */
@@ -31,7 +32,7 @@ public class CMDInterface implements UInterface {
      * @param feedback The CompanyFeedback instance to handle the business logic.
      * @param dbPath   The path to the SQLite database.
      */
-    public CMDInterface(CompanyFeedback feedback, String dbPath)   {
+    public CMDInterface(LogicInterface feedback, String dbPath)   {//
         this.feedback = feedback;
         this.dbPath = dbPath;
     }
